@@ -20,6 +20,10 @@ inline uint64_t rdtsc() {
   uint64_t hi, lo;
   __asm__ volatile("rdtsc" : "=a" (lo), "=d" (hi));
   return (hi << 32) | lo;
+#elif defined(__powerpc64__)
+  uint64_t r;
+  asm volatile("mfspr %0, 268" : "=r" (r));
+  return r;
 #else
 #error Unsupported CPU. Consider implementing your own Clock.
 #endif

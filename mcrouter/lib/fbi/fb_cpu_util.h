@@ -30,6 +30,9 @@ static inline uint64_t cycle_timer(void) {
 #ifdef __aarch64__
   uint64_t val;
   asm volatile ("mrs %[rt],cntvct_el0" : [rt] "=r" (val));
+#elif defined (__powerpc64__)
+  uint64_t val;
+  asm volatile("mfspr %0, 268" : "=r" (val));
 #else
   uint32_t __a,__d;
   uint64_t val;
